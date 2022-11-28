@@ -99,12 +99,6 @@ const KeyboardContainer = styled.div`
   }
 `;
 
-const Credits = styled.div`
-  display: inline-block;
-  font-size: 0.75em;
-  text-align: center;
-`;
-
 const Board = ({ wordLength = 5, numTries = 6 }) => {
   const [gameOver, setGameOver] = useState(false);
   const [refreshNum, setRefreshNum] = useState(Math.random());
@@ -134,10 +128,12 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     if (gameOver === true) {
       window.removeEventListener("keydown", onKeyDown);
       wordsSection.removeEventListener("click", onWordClick);
-      wordsSection.innerHTML = "";
+      wordsSection.style.display = "none";
+      // wordsSection.innerHTML = "";
     } else {
       window.addEventListener("keydown", onKeyDown);
       wordsSection.addEventListener("click", onWordClick);
+      wordsSection.style.display = "block";
     }
     return () => {
       window.removeEventListener("keydown", onKeyDown);
