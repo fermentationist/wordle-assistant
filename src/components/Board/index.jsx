@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Square from "../Square";
+import Keyboard from "../Keyboard";
 import wordList from "./wordList";
 import { getRemainingWords } from "./wordle.js";
 
@@ -61,6 +62,13 @@ const WordButton = styled.button`
   text-align: center;
   line-height: 0.5em;
   padding: 0.25em;
+`;
+
+const KeyboardContainer = styled.div`
+  display: none;
+  @media screen and (max-width: 600px) {
+    display: unset;
+  }
 `;
 
 const Board = ({ wordLength = 5, numTries = 6 }) => {
@@ -169,6 +177,18 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     }
   };
 
+  const handleChar = char => {
+    const nextCharIndex = rowsRef.current[currentIndex.current].indexOf(null);
+    if (nextCharIndex !== -1) {
+      // if there is a blank space available
+      const rowsCopy = [...rowsRef.current];
+      const currentRow = [...rowsRef.current[currentIndex.current]];
+      currentRow[nextCharIndex] = char.toUpperCase();
+      rowsCopy[currentIndex.current] = currentRow;
+      setRows(rowsCopy);
+    }
+  }
+
   const onKeyDown = (event) => {
     // onKeyDown event listener
     if (event.key === "Enter") {
@@ -183,15 +203,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     const allowedChars = /^[a-zA-Z]$/;
     if (allowedChars.test(event.key)) {
       // VALID LETTER
-      const nextCharIndex = rowsRef.current[currentIndex.current].indexOf(null);
-      if (nextCharIndex !== -1) {
-        // if there is a blank space available
-        const rowsCopy = [...rowsRef.current];
-        const currentRow = [...rowsRef.current[currentIndex.current]];
-        currentRow[nextCharIndex] = event.key.toUpperCase();
-        rowsCopy[currentIndex.current] = currentRow;
-        setRows(rowsCopy);
-      }
+      handleChar(event.key.toUpperCase());
     }
   };
 
@@ -224,6 +236,17 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     setRows([[...emptyRow]]);
     appliedFilters.current = [];
   };
+
+  const onVirtualKeypress = key => {
+    switch (key) {
+      case "{enter}":
+        return handleEnter();
+      case "{bksp}":
+        return handleDelete();
+      default:
+        return handleChar(key);
+    }
+  }
 
   return (
     <Container>
@@ -259,6 +282,9 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
           );
         })}
       </InputRows>
+      <KeyboardContainer>
+        <Keyboard onKeyPress={onVirtualKeypress}/>
+      </KeyboardContainer>
       <WordsSection>
         <Title>
           {possibleWords.length === 1
