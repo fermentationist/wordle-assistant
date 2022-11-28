@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import Square from "../Square";
+import Square, { COLORS } from "../Square";
 import Keyboard from "../Keyboard";
 import unsortedWordList from "./wordList";
 import { getRemainingWords } from "./wordle.js";
@@ -19,7 +19,7 @@ const InputRows = styled.div`
 
 const Container = styled.main`
   max-width: 100vw;
-  min-height: 100vh;
+  min-height: 90vh;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -56,7 +56,7 @@ const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 85vw;
-  max-height: ${props => `calc(60vh - calc(${props.numRows} * 3em))`};
+  max-height: ${(props) => `calc(60vh - calc(${props.numRows} * 4em))`};
   flex-wrap: wrap;
   border: 1px solid gray;
   border-radius: 5px;
@@ -72,6 +72,23 @@ const WordButton = styled.button`
   text-align: center;
   line-height: 0.5em;
   padding: 0.25em;
+`;
+
+const EnterButton = styled.button`
+  height: 2em;
+  margin: 0.5em 0.5em 0 0.5em;
+  text-align: center;
+  line-height: 0.5em;
+  padding: 0 0.5em;
+  background-color: ${COLORS["green"]};
+`;
+
+const ResetButton = styled.button`
+  height: 2em;
+  margin: 0.5em 0.5em 0 0.5em;
+  text-align: center;
+  line-height: 0.5em;
+  padding: 0 0.5em;
 `;
 
 const KeyboardContainer = styled.div`
@@ -199,7 +216,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     }
   };
 
-  const handleChar = char => {
+  const handleChar = (char) => {
     const nextCharIndex = rowsRef.current[currentIndex.current].indexOf(null);
     if (nextCharIndex !== -1) {
       // if there is a blank space available
@@ -209,7 +226,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
       rowsCopy[currentIndex.current] = currentRow;
       setRows(rowsCopy);
     }
-  }
+  };
 
   const onKeyDown = (event) => {
     // onKeyDown event listener
@@ -260,7 +277,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     appliedFilters.current = [];
   };
 
-  const onVirtualKeypress = key => {
+  const onVirtualKeypress = (key) => {
     switch (key) {
       case "{enter}":
         return handleEnter();
@@ -269,12 +286,12 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
       default:
         return handleChar(key);
     }
-  }
+  };
 
   const chooseRandom = () => {
     const [word] = getRandomArrayMembers(possibleWordsRef.current, 1);
     selectWord(word);
-  }
+  };
 
   return (
     <Container>
@@ -296,42 +313,33 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
                   );
                 })}
               </Row>
-              {
-                rowIsComplete(row) &&
-                currentIndex.current === rowsIndex &&
-                currentIndex.current < numTries - 1 &&
-                !gameOver ? (
-                  <WordButton onClick={handleEnter} key="enter-button">
-                    Enter
-                  </WordButton>
-                ) : null
-              }
             </div>
           );
         })}
+        <div>
+          {possibleWords.length > 1 ? (
+            <>
+              <ResetButton onClick={chooseRandom}>RANDOM</ResetButton>
+            </>
+          ) : null}
+          {rowIsComplete(rowsRef.current[currentIndex.current]) &&
+          currentIndex.current < numTries - 1 &&
+          !gameOver ? (
+            <EnterButton onClick={handleEnter} key="enter-button">
+              ENTER
+            </EnterButton>
+          ) : null}
+          <ResetButton onClick={resetBoard}>RESET</ResetButton>
+        </div>
       </InputRows>
       <KeyboardContainer>
-        <Keyboard onKeyPress={onVirtualKeypress}/>
+        <Keyboard onKeyPress={onVirtualKeypress} />
       </KeyboardContainer>
       <WordsSection>
         <Title>
-          {
-            possibleWords.length > 1 ? (
-              <>
-                <a href="#" onClick={chooseRandom}>
-                  CHOOSE RANDOM WORD
-                </a>
-                {" "}•{" "}
-              </>
-            ) : null
-          }
           {possibleWords.length === 1
             ? "SOLVED"
             : `${possibleWords.length} POSSIBLE WORDS`}
-            {" "}•{" "}
-          <a href="#" onClick={resetBoard}>
-            RESET
-          </a>
         </Title>
         <WordsContainer id="words-container" numRows={rowsRef.current.length}>
           {possibleWords.map((word, index) => {
@@ -343,9 +351,6 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
           })}
         </WordsContainer>
       </WordsSection>
-      <Credits>
-        © 2022 <a href="https://dennis-hodges.com/">Dennis Hodges</a>
-      </Credits>
     </Container>
   );
 };
