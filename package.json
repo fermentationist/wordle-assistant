@@ -1,8 +1,8 @@
 {
-  "name": "wordle-helper",
+  "name": "wordle-assistant",
   "private": false,
   "version": "0.0.1",
-  "homepage": "https://github.com/fermentationist/wordle-helper/",
+  "homepage": "https://github.com/fermentationist/wordle-assistant/",
   "author": {
     "email": "fermentationist@gmail.com",
     "name": "Dennis Hodges"

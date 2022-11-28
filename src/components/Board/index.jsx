@@ -56,7 +56,7 @@ const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 85vw;
-  max-height: ${props => `calc(65vh - calc(${props.numRows} * 3em))`};
+  max-height: ${props => `calc(60vh - calc(${props.numRows} * 3em))`};
   flex-wrap: wrap;
   border: 1px solid gray;
   border-radius: 5px;
@@ -79,6 +79,12 @@ const KeyboardContainer = styled.div`
   @media screen and (hover: hover) {
     display: none;
   }
+`;
+
+const Credits = styled.div`
+  display: inline-block;
+  font-size: 0.75em;
+  text-align: center;
 `;
 
 const Board = ({ wordLength = 5, numTries = 6 }) => {
@@ -337,6 +343,9 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
           })}
         </WordsContainer>
       </WordsSection>
+      <Credits>
+        © 2022 <a href="https://dennis-hodges.com/">Dennis Hodges</a>
+      </Credits>
     </Container>
   );
 };
