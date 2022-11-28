@@ -81,6 +81,7 @@ const EnterButton = styled.button`
   line-height: 0.5em;
   padding: 0 0.5em;
   background-color: ${COLORS["green"]};
+  color: ivory;
 `;
 
 const ResetButton = styled.button`
