@@ -2,8 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Square from "../Square";
 import Keyboard from "../Keyboard";
-import wordList from "./wordList";
+import unsortedWordList from "./wordList";
 import { getRemainingWords } from "./wordle.js";
+
+const wordList = unsortedWordList.sort();
 
 const InputRows = styled.div`
   height: auto;
@@ -19,7 +21,7 @@ const Container = styled.main`
   flex-direction: column;
   place-items: center;
   gap: 1em;
-  @media screen and (min-width: 600px) {
+  @media screen and (hover: hover) {
     display: grid;
     grid-template-columns: 1fr 2fr;
   }
@@ -29,7 +31,7 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   height: auto;
-  @media screen and (min-width: 600px) {
+  @media screen and (hover: hover) {
     max-width: 33vw;
   }
 `;
@@ -65,9 +67,8 @@ const WordButton = styled.button`
 `;
 
 const KeyboardContainer = styled.div`
-  display: none;
-  @media screen and (max-width: 600px) {
-    display: unset;
+  @media screen and (hover: hover) {
+    display: none;
   }
 `;
 
