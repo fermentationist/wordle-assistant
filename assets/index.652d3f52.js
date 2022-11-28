@@ -157,6 +157,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   line-height: 0.5em;
   padding: 0 0.5em;
   background-color: ${cn.green};
+  color: ivory;
 `,of=xt.button`
   height: 2em;
   margin: 0.5em 0.5em 0 0.5em;
