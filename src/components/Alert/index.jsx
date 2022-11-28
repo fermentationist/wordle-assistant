@@ -9,12 +9,13 @@ const StyledBox = muiStyled(Box)`
   margin: 1em;
 `;
 
-const CustomAlert = ({message, closeDialog, showDialog, title}) => {
+const CustomAlert = ({message, closeDialog, showDialog, title, style}) => {
   return (
     <CustomDialog
       showDialog={showDialog}
       closeDialog={closeDialog}
       title={title}
+      style={style}
     >
       <Stack>
         <StyledBox>

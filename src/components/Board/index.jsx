@@ -4,6 +4,7 @@ import Square from "../Square";
 import Keyboard from "../Keyboard";
 import unsortedWordList from "./wordList";
 import { getRemainingWords } from "./wordle.js";
+import { getRandomArrayMembers } from "../../util/helpers";
 
 const wordList = unsortedWordList.sort();
 
@@ -11,6 +12,9 @@ const InputRows = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
+  @media screen and (hover: hover) {
+    max-width: 25vw;
+  }
 `;
 
 const Container = styled.main`
@@ -19,20 +23,22 @@ const Container = styled.main`
   height: auto;
   display: flex;
   flex-direction: column;
-  place-items: center;
   gap: 1em;
-  @media screen and (hover: hover) {
+  @media screen and (min-width: 1280px) {
     display: grid;
     grid-template-columns: 1fr 2fr;
+    place-items: center;
   }
 `;
 
 const Row = styled.div`
+  width: 85vw;
   display: flex;
   flex-direction: row;
   height: auto;
-  @media screen and (hover: hover) {
-    max-width: 33vw;
+  place-content: center;
+  @media screen and (min-width: 1280px) {
+    max-width: 25vw;
   }
 `;
 
@@ -49,13 +55,15 @@ const Title = styled.title`
 const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  max-width: 66vw;
-  width: 66vw;
-  max-height: 70vh;
+  width: 85vw;
+  max-height: ${props => `calc(65vh - calc(${props.numRows} * 3em))`};
   flex-wrap: wrap;
   border: 1px solid gray;
   border-radius: 5px;
   overflow-y: scroll;
+  @media screen and (min-width: 1280px) {
+    max-width: 66vw;
+  }
 `;
 
 const WordButton = styled.button`
@@ -67,6 +75,7 @@ const WordButton = styled.button`
 `;
 
 const KeyboardContainer = styled.div`
+  width: 85vw;
   @media screen and (hover: hover) {
     display: none;
   }
@@ -75,6 +84,7 @@ const KeyboardContainer = styled.div`
 const Board = ({ wordLength = 5, numTries = 6 }) => {
   const [gameOver, setGameOver] = useState(false);
   const [refreshNum, setRefreshNum] = useState(Math.random());
+  const [solved, setSolved] = useState(false);
   const emptyRow = Array(wordLength).fill(null);
   const emptyColorRow = Array(wordLength).fill("gray");
   const currentIndex = useRef(0);
@@ -155,9 +165,14 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     );
     if (currentRowIsComplete && currentIndex.current < numTries - 1) {
       filterWords();
-      addNewRow();
+      if (possibleWordsRef.current.length < 1) {
+        setGameOver(true);
+      } else {
+        addNewRow();
+      }
       if (possibleWordsRef.current.length === 1) {
         selectWord(possibleWordsRef.current[0]);
+        setSolved(true);
         setGameOver(true);
       }
     }
@@ -230,6 +245,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
 
   const resetBoard = () => {
     setGameOver(false);
+    setSolved(false);
     setPossibleWords(wordList);
     currentIndex.current = 0;
     colorRowsRef.current = [[...emptyColorRow]];
@@ -249,6 +265,11 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     }
   }
 
+  const chooseRandom = () => {
+    const [word] = getRandomArrayMembers(possibleWordsRef.current, 1);
+    selectWord(word);
+  }
+
   return (
     <Container>
       <InputRows id="input-rows">
@@ -263,7 +284,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
                       key={`row-${rowsIndex}-square-${index}`}
                       callback={colorChangeCallback.bind(null, index)}
                       active={currentIndex.current === rowsIndex && !gameOver}
-                      startColor={gameOver ? "green" : "gray"}
+                      startColor={solved ? "green" : "gray"}
                       refreshNum={refreshNum}
                     />
                   );
@@ -288,15 +309,25 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
       </KeyboardContainer>
       <WordsSection>
         <Title>
+          {
+            possibleWords.length > 1 ? (
+              <>
+                <a href="#" onClick={chooseRandom}>
+                  CHOOSE RANDOM WORD
+                </a>
+                {" "}•{" "}
+              </>
+            ) : null
+          }
           {possibleWords.length === 1
-            ? "SOLUTION"
-            : `${possibleWords.length} possible words`}{" "}
-          •{" "}
+            ? "SOLVED"
+            : `${possibleWords.length} POSSIBLE WORDS`}
+            {" "}•{" "}
           <a href="#" onClick={resetBoard}>
             RESET
           </a>
         </Title>
-        <WordsContainer id="words-container">
+        <WordsContainer id="words-container" numRows={rowsRef.current.length}>
           {possibleWords.map((word, index) => {
             return (
               <WordButton key={index} data-word={word}>

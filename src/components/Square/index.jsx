@@ -8,10 +8,11 @@ export const COLORS = {
 }
 
 const StyledSquare = styled.div`
-  height: 3em;
-  width: 3em;
+  aspect-ratio: 1;
+  height: ${props => props.width};
+  width: ${props => props.width};
   border-radius: 1px;
-  margin: 0.125em;
+  margin: 0.175em;
   background-color: ${props => props.color};
   display: flex;
   place-content: center;
@@ -22,11 +23,11 @@ const StyledSquare = styled.div`
 const Span = styled.span`
   font-family: "Clear Sans","Helvetica Neue",Arial,sans-serif;
   font-weight: bold;
-  font-size: 1.75em;
+  font-size: 2.25em;
   color: ivory;
 `;
 
-const Square = ({char, callback, active, className, startColor = "gray", refreshNum}) => {
+const Square = ({char, callback, active, className, startColor = "gray", refreshNum, width = "4em"}) => {
   const [color, setColor] = useState(COLORS[startColor]);
 
   useEffect(() => {
@@ -37,7 +38,6 @@ const Square = ({char, callback, active, className, startColor = "gray", refresh
     if (!active) {
       return;
     }
-    console.log("color:", color)
     switch (color) {
       case COLORS["gray"]:
         setColor(COLORS["yellow"]);
@@ -55,6 +55,7 @@ const Square = ({char, callback, active, className, startColor = "gray", refresh
       onClick={toggleColorChange} 
       color={color}
       className={className}
+      width={width}
     >
       <Span>
         {char}

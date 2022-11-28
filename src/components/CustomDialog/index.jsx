@@ -18,6 +18,7 @@ const CustomDialog = ({
   title,
   confirm,
   loading,
+  style
 }) => {
   return (
     <>
@@ -25,6 +26,7 @@ const CustomDialog = ({
         <Dialog
           open={showDialog}
           onClose={closeDialog}
+          style={style}
         >
           {title ? <DialogTitle>{title}</DialogTitle> : null}
           <StyledContent className={className}>{children}</StyledContent>
