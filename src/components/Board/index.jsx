@@ -273,13 +273,15 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
   };
 
   const onVirtualKeypress = (key) => {
-    switch (key) {
-      case "{enter}":
-        return handleEnter();
-      case "{bksp}":
-        return handleDelete();
-      default:
-        return handleChar(key);
+    if (!gameOver) {
+      switch (key) {
+        case "{enter}":
+          return handleEnter();
+        case "{bksp}":
+          return handleDelete();
+        default:
+          return handleChar(key);
+      }
     }
   };
 
@@ -333,7 +335,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
       <WordsSection>
         <Title>
           {possibleWords.length === 1
-            ? "SOLVED"
+            ? ""
             : `${possibleWords.length} POSSIBLE WORDS`}
         </Title>
         <WordsContainer id="words-container" numRows={rowsRef.current.length}>
