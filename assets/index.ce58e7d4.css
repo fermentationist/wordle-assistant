@@ -1,4 +1,4 @@
-.hg-theme-default.virtual-keyboard-style{background-color:#3a3a3c}.hg-theme-default.virtual-keyboard-style .hg-button{height:50px;display:flex;justify-content:center;align-items:center;background-color:#1a1a1a;color:#fff;box-shadow:-.25px 0 #ffffffbf,1px 0 1px #000}.hg-theme-default.virtual-keyboard-style .hg-button:active{background:#1c4995;color:#fff}/*!
+.hg-theme-default.virtual-keyboard-style{background-color:#3a3a3c}.hg-theme-default.virtual-keyboard-style .hg-button{height:50px;display:flex;justify-content:center;align-items:center;background-color:#1a1a1a;color:#fff;box-shadow:1px 0 1px #000}.hg-theme-default.virtual-keyboard-style .hg-button:active{background:#1c4995;color:#fff}/*!
 * 
 *   react-simple-keyboard v3.4.240
 *   https://github.com/hodgef/react-simple-keyboard
