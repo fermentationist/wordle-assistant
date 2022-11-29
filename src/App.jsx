@@ -12,7 +12,8 @@ const intro = `
   (5) Repeat until solved or out of guesses.
 `;
 
-const Credits = styled.div`
+const Footer = styled.div`
+  margin-top: 1em;
   display: inline-block;
   font-size: 0.75em;
   text-align: center;
@@ -30,9 +31,15 @@ function App() {
         title="Wordle Assistant"
         style={{textAlign: "center"}}
       />
-      <Credits>
-        © 2022 <a href="https://dennis-hodges.com/">Dennis Hodges</a>
-      </Credits>
+      <Footer>
+        <a href="https://www.nytimes.com/games/wordle/index.html">
+          Wordle - NYTimes
+        </a>
+        <br/>
+        © 2022 <a href="https://dennis-hodges.com/">
+          Dennis Hodges
+        </a>
+      </Footer>
     </div>
   );
 }

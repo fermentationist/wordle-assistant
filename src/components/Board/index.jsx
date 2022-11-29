@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Square, { COLORS } from "../Square";
 import Keyboard from "../Keyboard";
-import wordList from "./wordList.js";
+import wordList from "./words.js";
 import { getRemainingWords } from "./wordle.js";
 import { getRandomArrayMembers } from "../../util/helpers";
 
@@ -10,18 +10,17 @@ const InputRows = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
-  @media screen and (hover: hover) {
-    max-width: 25vw;
-  }
+  place-items: center;
 `;
 
 const Container = styled.main`
   max-width: 100vw;
-  min-height: 90vh;
-  height: auto;
+  max-height: 85vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   gap: 1em;
+  place-items: center;
   @media screen and (min-width: 1280px) {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -30,14 +29,18 @@ const Container = styled.main`
 `;
 
 const Row = styled.div`
-  width: 85vw;
   display: flex;
   flex-direction: row;
   height: auto;
-  place-content: center;
   @media screen and (min-width: 1280px) {
     max-width: 25vw;
   }
+`;
+
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  place-items: center;
 `;
 
 const WordsSection = styled.div`
@@ -53,14 +56,15 @@ const Title = styled.title`
 const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 85vw;
-  max-height: ${(props) => `calc(60vh - calc(${props.numRows} * 4em))`};
+  width: 90vw;
+  max-height: ${(props) => `calc(52vh - calc(${props.numRows} * 4em))`};
   flex-wrap: wrap;
   border: 1px solid gray;
   border-radius: 5px;
   overflow-y: scroll;
   @media screen and (min-width: 1280px) {
     max-width: 66vw;
+    max-height: 75vh;
   }
 `;
 
@@ -91,7 +95,8 @@ const ResetButton = styled.button`
 `;
 
 const KeyboardContainer = styled.div`
-  width: 85vw;
+  width: 90vw;
+  /* only show virtual keyboard on mobile */
   @media screen and (hover: hover) {
     display: none;
   }
@@ -127,7 +132,6 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
       window.removeEventListener("keydown", onKeyDown);
       wordsSection.removeEventListener("click", onWordClick);
       wordsSection.style.display = "none";
-      // wordsSection.innerHTML = "";
     } else {
       window.addEventListener("keydown", onKeyDown);
       wordsSection.addEventListener("click", onWordClick);
@@ -295,7 +299,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
       <InputRows id="input-rows">
         {rows.map((row, rowsIndex) => {
           return (
-            <div key={`row-${rowsIndex}`}>
+            <RowContainer key={`row-${rowsIndex}`}>
               <Row>
                 {row.map((char, index) => {
                   return (
@@ -310,7 +314,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
                   );
                 })}
               </Row>
-            </div>
+            </RowContainer>
           );
         })}
         <div>

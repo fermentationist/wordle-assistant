@@ -1,4 +1,3 @@
-// from https://github.com/jonathanolson/wordle-solver/blob/master/server/targetWords.js
 export default [
   "aback",
   "abase",
@@ -41,7 +40,6 @@ export default [
   "aging",
   "aglow",
   "agony",
-  "agora",
   "agree",
   "ahead",
   "aider",
@@ -726,7 +724,6 @@ export default [
   "fever",
   "fewer",
   "fiber",
-  "fibre",
   "ficus",
   "field",
   "fiend",
@@ -1175,7 +1172,6 @@ export default [
   "lusty",
   "lying",
   "lymph",
-  "lynch",
   "lyric",
   "macaw",
   "macho",
@@ -1494,7 +1490,6 @@ export default [
   "pulpy",
   "pulse",
   "punch",
-  "pupal",
   "pupil",
   "puppy",
   "puree",
@@ -1778,7 +1773,6 @@ export default [
   "slant",
   "slash",
   "slate",
-  "slave",
   "sleek",
   "sleep",
   "sleet",
@@ -2244,7 +2238,6 @@ export default [
   "weird",
   "welch",
   "welsh",
-  "wench",
   "whack",
   "whale",
   "wharf",
@@ -2314,5 +2307,5 @@ export default [
   "youth",
   "zebra",
   "zesty",
-  "zonal",
+  "zonal"
 ];

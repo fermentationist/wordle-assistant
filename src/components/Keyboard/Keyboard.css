@@ -1,3 +1,18 @@
-.virtual-keyboard-style {
-  color: black;
+.hg-theme-default.virtual-keyboard-style {
+  background-color: #3A3A3C;
+}
+
+.hg-theme-default.virtual-keyboard-style .hg-button {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1A1A1A;
+  color: white;
+  box-shadow: -0.25px 0px 0px rgba(255, 255, 255, 0.75), 1px 0px 1px black;
+}
+
+.hg-theme-default.virtual-keyboard-style .hg-button:active {
+  background: #1c4995;
+  color: white;
 }
