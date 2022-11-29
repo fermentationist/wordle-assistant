@@ -56,7 +56,7 @@ const Title = styled.title`
 const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: clamp(21em, 95vw, 600px);
+  width: clamp(21em, 85vw, 600px);
   max-height: ${(props) => `calc(50vh - calc(${props.numRows} * 4em))`};
   flex-wrap: wrap;
   border: 1px solid gray;
@@ -95,7 +95,7 @@ const ResetButton = styled.button`
 `;
 
 const KeyboardContainer = styled.div`
-  width: clamp(21em, 95vw, 600px);
+  width: clamp(21em, 85vw, 600px);
   /* only show virtual keyboard on mobile */
   @media screen and (hover: hover) {
     display: none;
