@@ -5,24 +5,24 @@ A React application that helps the user solve [Wordle](https://www.nytimes.com/g
 
 ## Use
 
-1. **Type or select a word.** You may also click "RANDOM" to select a random word from the list.
-2. **Set the color of each letter to match Wordle's output, by clicking them.** Each time you click a letter, its color will change, from gray (letter is not present in solution) to yellow (letter is present, but not in current position) to green (letter is in correct position), and back to gray.
-3. **Hit "ENTER" to filter the list of remaining words.** 
-4. **Repeat until solved**, or until all six guesses are used.
+1. **Type or select a starting word in Wordle Assistant.** You may also click "RANDOM" to select a random word from the list.
+2. **Enter the word in Wordle.** Once entered, the each letter will turn one of three colors, gray (letter is not present in solution), yellow (letter is present, but not in current position), or green (letter is in correct position).
+3. **Set the color of each letter in Wordle Assistant to match Wordle's output, by clicking them.** Each time you click a letter, its color will change, from gray, to yellow, to green, and back to gray.
+4. **Hit "ENTER" in Wordle Assistant to filter the list of remaining words.** 
+5. **Repeat until solved**, or until all six guesses are used.
 
-## Source
+## Source data
 
 The complete 14,000+ word list of every word the game will accept as valid can be found in the Wordle client-side JavaScript code. 
 
-However, the set of words from which solutions are actually drawn is much smaller. With the url "https://www.nytimes.com/svc/wordle/v2/{YYYY}-{MM}-{DD}.json", it is possible to get the solution for a specific date using the NYTimes API. Unfortunately, as of this time (11/28/2022), I can only get solutions as far ahead as 01/07/2023.
+However, the set of words from which solutions are actually drawn is much smaller. Answers are said to be determined for every day through 10/20/2027 ([https://www.cnet.com/culture/how-to-download-wordle-and-play-offline-for-the-next-5-years](https://www.cnet.com/culture/how-to-download-wordle-and-play-offline-for-the-next-5-years)), making a much shorter list of 2,315 words.
 
-Solutions are said to exist for every day through 10/20/2027 ([https://www.cnet.com/culture/how-to-download-wordle-and-play-offline-for-the-next-5-years](https://www.cnet.com/culture/how-to-download-wordle-and-play-offline-for-the-next-5-years)), though.
+I used [this version](https://github.com/LaurentLessard/wordlesolver/blob/main/solutions_nyt.txt) of the 2,315 word list, though the same one can be found in many places around the internet. Apparently, this list used to be defined in the client side code, but that unfortunately is no longer the case. Instead, it is now possible to get the solution for each specific day through the NYTimes API, by using the endpoint https://www.nytimes.com/svc/wordle/v2/{YYYY}-{MM}-{DD}.json. As of this time (11/2022), I am only able to get answers through the API for as far ahead as 01/07/2023. It presently returns "undefined" for any later date (though this will obviously change as time passes). For this reason, I am unable to verify the authenticity or completeness of the list that I am using, nor am I able to compile my own list.
 
-I am using a much shorter list of 2,315 words, said to be the complete list of solutions. It is sourced from [here](https://github.com/LaurentLessard/wordlesolver/blob/main/solutions_nyt.txt), although the same list can be found in many places around the internet. Apparently, the complete list of solutions used to be defined in the client side code. Since this is no longer the case, I cannot independently verify the authenticity or completeness of this list.
+Because it is supposedly ordered by date, I re-sorted it alphbetically instead. My goal was not to make a page that displays the current day's answer, but to make an interactive app that allows the user to see the list of possible answers dwindle in response to their guesses.
 
-## Intent
-
-This project is primarily an exercise in web development, and I do not actually recommend that you make a habit of cheating at Wordle, as it is a lot less fun than trying to solve the puzzle in earnest, and it is also silly to cheat at a game you play against yourself.
+## Note
+This project is primarily an exercise in web development, and I do not actually recommend that you make a habit of cheating at Wordle, as it is a lot less fun than trying to solve the puzzle in earnest (and it is also a bit silly to cheat at a game you play against yourself).
 
 ---
 ## License
