@@ -6,7 +6,7 @@ A React application that helps the user solve [Wordle](https://www.nytimes.com/g
 ## Use
 
 1. **Type or select a starting word in Wordle Assistant.** You may also click "RANDOM" to select a random word from the list.
-2. **Enter the word in Wordle.** Once entered, the each letter will turn one of three colors, gray (letter is not present in solution), yellow (letter is present, but not in current position), or green (letter is in correct position).
+2. **Enter the word in Wordle.** Once entered, each letter will turn one of three colors, gray (letter is not present in solution), yellow (letter is present, but not in current position), or green (letter is in correct position).
 3. **Set the color of each letter in Wordle Assistant to match Wordle's output, by clicking them.** Each time you click a letter, its color will change, from gray, to yellow, to green, and back to gray.
 4. **Hit "ENTER" in Wordle Assistant to filter the list of remaining words.** 
 5. **Repeat until solved**, or until all six guesses are used.
