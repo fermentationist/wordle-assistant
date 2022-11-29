@@ -58,6 +58,7 @@ const WordsContainer = styled.div`
   flex-direction: row;
   width: clamp(21em, 85vw, 600px);
   max-height: ${(props) => `calc(50vh - calc(${props.numRows} * 4em))`};
+  min-height: 3em;
   flex-wrap: wrap;
   border: 1px solid gray;
   border-radius: 5px;
