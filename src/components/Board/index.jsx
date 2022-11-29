@@ -2,11 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Square, { COLORS } from "../Square";
 import Keyboard from "../Keyboard";
-import unsortedWordList from "./wordList";
+import wordList from "./wordList.js";
 import { getRemainingWords } from "./wordle.js";
 import { getRandomArrayMembers } from "../../util/helpers";
-
-const wordList = unsortedWordList.sort();
 
 const InputRows = styled.div`
   height: auto;

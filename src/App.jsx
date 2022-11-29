@@ -6,7 +6,7 @@ import "./App.css";
 
 const intro = `
   (1) Type or select a word.
-  (2) Click the boxes to set their colors to match Wordle's output.
+  (2) Click the boxes to set the color of each letter to match Wordle's output.
   (3) Hit "Enter" to filter the list of remaining words.
 `;
 
