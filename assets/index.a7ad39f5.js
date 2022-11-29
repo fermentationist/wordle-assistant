@@ -136,7 +136,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
 `,Gv=xt.div`
   display: flex;
   flex-direction: row;
-  width: clamp(21em, 95vw, 600px);
+  width: clamp(21em, 85vw, 600px);
   max-height: ${e=>`calc(50vh - calc(${e.numRows} * 4em))`};
   flex-wrap: wrap;
   border: 1px solid gray;
@@ -167,7 +167,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   line-height: 0.5em;
   padding: 0 0.5em;
 `,Xv=xt.div`
-  width: clamp(21em, 95vw, 600px);
+  width: clamp(21em, 85vw, 600px);
   /* only show virtual keyboard on mobile */
   @media screen and (hover: hover) {
     display: none;
