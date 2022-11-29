@@ -15,13 +15,13 @@ const InputRows = styled.div`
 
 const Container = styled.main`
   max-width: 100vw;
-  max-height: 85vh;
-  min-height: 85vh;
+  max-height: 95vh;
+  min-height: max(85vh, 600px);
   display: flex;
   flex-direction: column;
   gap: 1em;
   place-items: center;
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 1280px) and (hover: hover) {
     display: grid;
     grid-template-columns: 1fr 2fr;
     place-items: center;
@@ -32,7 +32,7 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   height: auto;
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 1280px) and (hover: hover) {
     max-width: 25vw;
   }
 `;
@@ -56,14 +56,14 @@ const Title = styled.title`
 const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 90vw;
-  max-height: ${(props) => `calc(52vh - calc(${props.numRows} * 4em))`};
+  width: clamp(21em, 95vw, 600px);
+  max-height: ${(props) => `calc(50vh - calc(${props.numRows} * 4em))`};
   flex-wrap: wrap;
   border: 1px solid gray;
   border-radius: 5px;
   overflow-y: scroll;
-  @media screen and (min-width: 1280px) {
-    max-width: 66vw;
+  @media screen and (min-width: 1280px) and (hover: hover) {
+    width: clamp(600px, 60vw, 66vw);
     max-height: 75vh;
   }
 `;
@@ -95,7 +95,7 @@ const ResetButton = styled.button`
 `;
 
 const KeyboardContainer = styled.div`
-  width: 90vw;
+  width: clamp(21em, 95vw, 600px);
   /* only show virtual keyboard on mobile */
   @media screen and (hover: hover) {
     display: none;

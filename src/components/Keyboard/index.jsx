@@ -16,7 +16,7 @@ const Keyboard = ({ className, onKeyPress }) => {
       }}
       display={{
         "{bksp}": "🔙",
-        "{enter}": "Enter",
+        "{enter}": "ENTER",
         "@": "at",
       }}
       theme="hg-theme-default virtual-keyboard-style"
