@@ -5,11 +5,10 @@ import styled from "styled-components";
 import "./App.css";
 
 const intro = `
-  (1) Type or select a starting word in Wordle Assistant.
-  (2) Enter the word in Wordle.
-  (3) Set the color of each letter in Wordle Assistant to match Wordle's output, by clicking them.
-  (4) Hit "Enter" in Wordle Assistant to filter the list of remaining words.
-  (5) Repeat until solved or out of guesses.
+  (1) Type or select your starting word.
+  (2) Set the color of each letter to match Wordle's output, by clicking them.
+  (3) Hit "ENTER" to filter the list of remaining words.
+  (4) Repeat until solved or out of guesses.
 `;
 
 const Footer = styled.div`

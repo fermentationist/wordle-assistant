@@ -5,10 +5,9 @@ A React application that helps the user solve [Wordle](https://www.nytimes.com/g
 
 ## Use
 
-1. **Type or select a starting word in Wordle Assistant.** You may also click "RANDOM" to select a random word from the list.
-2. **Enter the word in Wordle.** Once entered, each letter will turn one of three colors, gray (letter is not present in solution), yellow (letter is present, but not in current position), or green (letter is in correct position).
-3. **Set the color of each letter in Wordle Assistant to match Wordle's output, by clicking them.** Each time you click a letter, its color will change, from gray, to yellow, to green, and back to gray.
-4. **Hit "ENTER" in Wordle Assistant to filter the list of remaining words.** 
+1. **Type or select your starting word**. You may also click "RANDOM", to choose a word at random from the list of 2,309 answers.
+3. **Set the color of each letter to match Wordle's output, by clicking them.** Each time you click a letter, its color will change, from gray, to yellow, to green, and back to gray.
+4. **Hit "ENTER" to filter the list of remaining words.** 
 5. **Repeat until solved**, or until all six guesses are used.
 
 ## Source data
@@ -17,9 +16,9 @@ The complete 14,855 word list of every word the game will accept as valid can be
 
 However, the set of words from which solutions are actually drawn is much smaller. Answers are said to be determined for every day through 10/20/2027 ([https://www.cnet.com/culture/how-to-download-wordle-and-play-offline-for-the-next-5-years](https://www.cnet.com/culture/how-to-download-wordle-and-play-offline-for-the-next-5-years)), making a much shorter list of 2,309.
 
-The same single long array, contains both the solutions as well as all the other acceptable words. However, the app seems to be getting the solution for each specific day from the NYTimes API, by using the endpoint `https://www.nytimes.com/svc/wordle/v2/{YYYY}-{MM}-{DD}.json`. As of this time (11/2022), I am only able to get answers through the API for as far ahead as 01/07/2023. It presently returns "undefined" for any later date (though this will obviously change as time passes). 
+The same single long array contains both the solutions as well as all the other acceptable words. However, the app seems to be getting the solution for each specific day from the NYTimes API, by using the endpoint `https://www.nytimes.com/svc/wordle/v2/{YYYY}-{MM}-{DD}.json`. As of this time (11/2022), I am only able to get answers through the API for as far ahead as 01/07/2023. It presently returns `undefined` for any later date (though this will obviously change as time passes). 
 
-Fortunately, the first 12,546 words of the array appear to be alphabetized, while the last 2,309 words, starting with "cigar" (which we know was the first Wordle) are not. I used these last 2,309 words as my source list.
+Fortunately, the first 12,546 words of the array appear to be alphabetized, while the last 2,309 words, starting with "cigar" (which was the first Wordle) are not. I used these last 2,309 words as my source list.
 
 Because it seemed to be ordered by date, I re-sorted it alphbetically instead. My goal was not to make a page that displays the current day's answer, but to make an interactive app that allows the user to see the list of possible answers dwindle in response to their guesses.
 
