@@ -4,7 +4,7 @@
   "theme_color": "#242424",
   "background_color": "#242424",
   "display": "fullscreen",
-  "scope": ".",
+  "scope": "/",
   "start_url": "/",
   "description": "An app that helps to solve Wordle puzzles",
   "icons": [
