@@ -28,10 +28,10 @@ const handleFetch = async event => {
   }
 }
 
-self.addEventListener("install", event => {
-  console.log("service worker installing...");
-  event.waitUntil(preCache(["/icons/favicon.ico"]));
-});
+// self.addEventListener("install", event => {
+//   console.log("service worker installing...");
+//   event.waitUntil(preCache(["/icons/favicon.ico"]));
+// });
 
 self.addEventListener("activate", event => {
   const serviceWorker = event.target.serviceWorker;
