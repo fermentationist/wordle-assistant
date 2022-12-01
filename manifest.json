@@ -6,7 +6,6 @@
   "display": "fullscreen",
   "scope": ".",
   "start_url": "/",
-  "id": "/wordle-assistant/",
   "description": "An app that helps to solve Wordle puzzles",
   "icons": [
     {
