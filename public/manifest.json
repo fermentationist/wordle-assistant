@@ -4,8 +4,8 @@
   "theme_color": "#242424",
   "background_color": "#242424",
   "display": "fullscreen",
-  "scope": "/",
-  "start_url": "https://dennis-hodges.com/wordle-assistant/",
+  "scope": "/wordle-assistant/",
+  "start_url": "/wordle-assistant/",
   "description": "An app that helps to solve Wordle puzzles",
   "icons": [
     {
