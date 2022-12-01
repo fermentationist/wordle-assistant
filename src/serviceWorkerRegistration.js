@@ -1,5 +1,4 @@
 const registerServiceWorker = async () => {
-  console.log("env:", process.env.NODE_ENV)
   if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
     try {
       const registration = navigator.serviceWorker.register("./serviceWorker.js");
