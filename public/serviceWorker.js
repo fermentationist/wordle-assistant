@@ -30,7 +30,7 @@ const handleFetch = async event => {
 
 self.addEventListener("install", event => {
   console.log("service worker installing...");
-  event.waitUntil(preCache(["/icons/favicon.ico", "/assets"]));
+  event.waitUntil(preCache(["/icons/favicon.ico"]));
 });
 
 self.addEventListener("activate", event => {
