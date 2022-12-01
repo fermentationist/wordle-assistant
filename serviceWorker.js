@@ -12,7 +12,7 @@ const preCache = async resources => {
 const handleFetch = async event => {
   const {request} = event;
   if (request.method.toLowerCase() === "get") {
-    console.log("request:", request);
+    // console.log("request:", request);
     const cache = await caches.open(CACHE_NAME);
     const cached = await cache.match(request);
     let response = cached;
@@ -20,9 +20,9 @@ const handleFetch = async event => {
       response = await fetch(request).catch(error => error);
       const responseClone = response.clone();
       await cache.add(request, responseClone).catch(error => {/*do nothing*/});
-      console.log("response:", response);
+      // console.log("response:", response);
     } else {
-      console.log("cached response:", cached);
+      // console.log("cached response:", cached);
     }
     return response;
   }
