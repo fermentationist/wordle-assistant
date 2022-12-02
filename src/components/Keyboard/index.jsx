@@ -15,7 +15,7 @@ const Keyboard = ({ className, onKeyPress }) => {
         ],
       }}
       display={{
-        "{bksp}": "🔙",
+        "{bksp}": "⌫",
         "{enter}": "ENTER",
         "@": "at",
       }}

@@ -32,6 +32,7 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   height: auto;
+  place-items: center;
   @media screen and (min-width: 1280px) and (hover: hover) {
     max-width: 25vw;
   }
@@ -95,6 +96,17 @@ const ResetButton = styled.button`
   padding: 0 0.5em;
 `;
 
+const DeleteButton = styled.button`
+  display: inline-block;
+  font-size: 3rem;
+  width: 4rem;
+  height: 4rem;
+  background-color: red !important;
+  color: white !important;
+  padding: 0;
+  border-radius: 0;
+`;
+
 const KeyboardContainer = styled.div`
   width: clamp(21em, 85vw, 600px);
   /* only show virtual keyboard on mobile */
@@ -107,6 +119,9 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
   const [gameOver, setGameOver] = useState(false);
   const [refreshNum, setRefreshNum] = useState(Math.random());
   const [solved, setSolved] = useState(false);
+  const [showRowDelete, setShowRowDelete] = useState(false);
+  const [xDown, setXDown] = useState(null);
+  const [yDown, setYDown] = useState(null);
   const emptyRow = Array(wordLength).fill(null);
   const emptyColorRow = Array(wordLength).fill("gray");
   const currentIndex = useRef(0);
@@ -148,7 +163,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     return !row.some((char) => char === null);
   };
 
-  const filterWords = () => {
+  const getNewFilterFromRow = () => {
     const filterMap = rowsRef.current[currentIndex.current].reduce(
       (map, char, index) => {
         const filter = {
@@ -164,11 +179,16 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
       },
       {}
     );
-    appliedFilters.current = filterMap;
-    const remaining = getRemainingWords(
-      possibleWordsRef.current,
-      appliedFilters.current
-    );
+    appliedFilters.current.push(filterMap);
+  };
+
+  const filterWords = () => {
+    const filters = [...appliedFilters.current];
+    let remaining = [...wordList];
+    while (filters.length) {
+      let nextFilter = filters.shift();
+      remaining = getRemainingWords(remaining, nextFilter);
+    }
     setPossibleWords(remaining);
   };
 
@@ -187,6 +207,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
       rowsRef.current[currentIndex.current]
     );
     if (currentRowIsComplete && currentIndex.current < numTries - 1) {
+      getNewFilterFromRow();
       filterWords();
       if (possibleWordsRef.current.length < 1) {
         setGameOver(true);
@@ -295,13 +316,76 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     selectWord(word);
   };
 
+  const getTouchCoords = (event) => {
+    const [touch] = event.touches;
+    return { x: touch.clientX, y: touch.clientY };
+  };
+
+  const onTouchStart = (event) => {
+    const { x, y } = getTouchCoords(event);
+    setXDown(x);
+    setYDown(y);
+  };
+
+  const onTouchMove = (event) => {
+    if (!xDown || !yDown) {
+      return;
+    }
+    const { x, y } = getTouchCoords(event);
+    const xDiff = x - xDown;
+    const yDiff = y - yDown;
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      // is horizontal swipe
+      if (xDiff < 0) {
+        // left swipe
+        setShowRowDelete(true);
+      } else {
+        // right swipe
+        setShowRowDelete(false);
+      }
+    }
+  };
+
+  const deletePreviousRow = () => {
+    // reduce currentIndex by one
+    currentIndex.current = currentIndex.current - 1;
+
+    // remove current row and previous row
+    const rowsCopy = rowsRef.current.slice(0, currentIndex.current);
+    // add new empty row
+    rowsCopy.push([...emptyRow]);
+    // reset colors of empty row to gray
+    setRefreshNum(Math.random());
+    setRows(rowsCopy);
+
+    // remove current and previous color rows
+    const colorRowsCopy = colorRowsRef.current.slice(0, currentIndex.current);
+    // add new emtpy color row
+    colorRowsCopy.push([...emptyColorRow]);
+    colorRowsRef.current = colorRowsCopy;
+
+    const currentFilters = [...appliedFilters.current];
+    // remove last filter
+    currentFilters.pop();
+    appliedFilters.current = currentFilters;
+    // re-apply remaining filters
+    filterWords();
+
+    // hide delete button
+    setShowRowDelete(false);
+  };
+
   return (
     <Container>
-      <InputRows id="input-rows">
+      <InputRows>
         {rows.map((row, rowsIndex) => {
           return (
             <RowContainer key={`row-${rowsIndex}`}>
-              <Row>
+              <Row
+                id="input-rows"
+                onTouchStart={rowsIndex === currentIndex.current - 1 ?onTouchStart : ()=>{}}
+                onTouchMove={rowsIndex === currentIndex.current - 1 ?onTouchMove : ()=>{}}
+              >
                 {row.map((char, index) => {
                   return (
                     <Square
@@ -310,10 +394,14 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
                       callback={colorChangeCallback.bind(null, index)}
                       active={currentIndex.current === rowsIndex && !gameOver}
                       startColor={solved ? "green" : "gray"}
+                      holdColor={currentIndex.current > rowsIndex}
                       refreshNum={refreshNum}
                     />
                   );
                 })}
+                {showRowDelete && rowsIndex === currentIndex.current - 1 ? (
+                  <DeleteButton onClick={deletePreviousRow}>✕</DeleteButton>
+                ) : null}
               </Row>
             </RowContainer>
           );

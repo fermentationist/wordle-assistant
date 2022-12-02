@@ -9,6 +9,7 @@ const intro = `
   (2) Set the color of each letter to match Wordle's output, by clicking them.
   (3) Hit "ENTER" to filter the list of remaining words.
   (4) Repeat until solved or out of guesses.
+  Note: You may swipe left on the previous word to delete it
 `;
 
 const Footer = styled.div`

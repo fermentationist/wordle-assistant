@@ -27,11 +27,13 @@ const Span = styled.span`
   color: ivory;
 `;
 
-const Square = ({char, callback, active, className, startColor = "gray", refreshNum, width = "4em"}) => {
+const Square = ({char, callback, active, className, startColor = "gray", refreshNum, width = "4rem", holdColor}) => {
   const [color, setColor] = useState(COLORS[startColor]);
 
   useEffect(() => {
-    setColor(COLORS[startColor]);
+    if (!holdColor) {
+      setColor(COLORS[startColor]);
+    }
   }, [refreshNum]);
 
   const toggleColorChange = event => {
