@@ -97,14 +97,19 @@ const ResetButton = styled.button`
 `;
 
 const DeleteButton = styled.button`
+  @keyframes slideIn{
+    from {width: 0; font-size: 0}
+    to {width: 4rem; font-size: 2.5rem}
+  }
+
   display: inline-block;
-  font-size: 3rem;
   width: 4rem;
   height: 4rem;
   background-color: red !important;
   color: white !important;
   padding: 0;
   border-radius: 0;
+  animation: slideIn ease-in 250ms;
 `;
 
 const KeyboardContainer = styled.div`
@@ -334,7 +339,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     const { x, y } = getTouchCoords(event);
     const xDiff = x - xDown;
     const yDiff = y - yDown;
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > 25) {
       // is horizontal swipe
       if (xDiff < 0) {
         // left swipe
