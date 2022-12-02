@@ -35,6 +35,7 @@ const Row = styled.div`
   flex-direction: row;
   height: auto;
   place-items: center;
+  overscroll-behavior: contain;
   @media screen and (min-width: 1280px) and (hover: hover) {
     max-width: 25vw;
   }
@@ -44,6 +45,7 @@ const RowContainer = styled.div`
   display: flex;
   flex-direction: column;
   place-items: center;
+  touch-action: none;
 `;
 
 const WordsSection = styled.div`
@@ -341,7 +343,9 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     const { x, y } = getTouchCoords(event);
     const xDiff = x - xDown;
     const yDiff = y - yDown;
-    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > MIN_SWIPE_DISTANCE) {
+    const isHorizontal = Math.abs(xDiff) > Math.abs(yDiff);
+    const isLargeEnoughSwipe = Math.abs(xDiff) > MIN_SWIPE_DISTANCE;
+    if (isHorizontal && isLargeEnoughSwipe && !gameOver) {
       // is horizontal swipe
       if (xDiff < 0) {
         // left swipe
