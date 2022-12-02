@@ -1,7 +1,7 @@
 const registerServiceWorker = async () => {
   if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
     try {
-      const registration = navigator.serviceWorker.register("/serviceWorker.js", { scope: "/" });
+      const registration = navigator.serviceWorker.register("./serviceWorker.js", {scope: "./"});
       if (registration.installing) {
         console.log("service worker installing");
       } else if (registration.waiting) {
