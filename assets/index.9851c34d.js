@@ -170,9 +170,10 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   padding: 0 0.5em;
 `,qv=ft.button`
   @keyframes slideIn{
-    from {width: 0; font-size: 0}
-    to {width: 4rem; font-size: 2.5rem}
+    from {width: 0; color: transparent; font-size: 0.5em}
+    to {width: 4rem; color: white; font-size: 2.5em}
   }
+  font-size: 2.5em;
   display: inline-block;
   width: 4rem;
   height: 4rem;
