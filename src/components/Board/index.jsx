@@ -6,6 +6,8 @@ import wordList from "./words.js";
 import { getRemainingWords } from "./wordle.js";
 import { getRandomArrayMembers } from "../../util/helpers";
 
+const MIN_SWIPE_DISTANCE =  60;
+
 const InputRows = styled.div`
   height: auto;
   display: flex;
@@ -101,7 +103,6 @@ const DeleteButton = styled.button`
     from {width: 0; font-size: 0}
     to {width: 4rem; font-size: 2.5rem}
   }
-
   display: inline-block;
   width: 4rem;
   height: 4rem;
@@ -339,7 +340,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     const { x, y } = getTouchCoords(event);
     const xDiff = x - xDown;
     const yDiff = y - yDown;
-    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > 25) {
+    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > MIN_SWIPE_DISTANCE) {
       // is horizontal swipe
       if (xDiff < 0) {
         // left swipe
