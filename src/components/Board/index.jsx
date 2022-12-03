@@ -1,130 +1,25 @@
 import { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import Square, { COLORS } from "../Square";
+import Square from "../Square";
 import Keyboard from "../Keyboard";
 import wordList from "./words.js";
 import { getRemainingWords } from "./wordle.js";
 import { getRandomArrayMembers } from "../../util/helpers";
+import {
+  InputRows,
+  Container,
+  Row,
+  RowContainer,
+  WordsSection,
+  Title,
+  WordsContainer,
+  WordButton,
+  EnterButton,
+  ResetButton,
+  DeleteButton,
+  KeyboardContainer,
+} from "./styledBoardComponents.jsx";
 
-const MIN_SWIPE_DISTANCE =  60;
-
-const InputRows = styled.div`
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-`;
-
-const Container = styled.main`
-  margin-left: ${props => props.shiftLeft ? "-1rem" : "0"};
-  max-width: 100vw;
-  max-height: 95vh;
-  min-height: max(85vh, 600px);
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  place-items: center;
-  @media screen and (min-width: 1280px) and (hover: hover) {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    place-items: center;
-  }
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: auto;
-  place-items: center;
-  overscroll-behavior: contain;
-  @media screen and (min-width: 1280px) and (hover: hover) {
-    max-width: 25vw;
-  }
-`;
-
-const RowContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  touch-action: none;
-`;
-
-const WordsSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-`;
-
-const Title = styled.title`
-  display: block;
-`;
-
-const WordsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: clamp(21em, 85vw, 600px);
-  max-height: ${(props) => `calc(50vh - calc(${props.numRows} * 4em))`};
-  min-height: 7em;
-  flex-wrap: wrap;
-  border: 1px solid gray;
-  border-radius: 5px;
-  overflow-y: scroll;
-  @media screen and (min-width: 1280px) and (hover: hover) {
-    width: clamp(600px, 60vw, 66vw);
-    max-height: 75vh;
-  }
-`;
-
-const WordButton = styled.button`
-  height: 2em;
-  margin: 0.25em;
-  text-align: center;
-  line-height: 0.5em;
-  padding: 0.25em;
-`;
-
-const EnterButton = styled.button`
-  height: 2em;
-  margin: 0.5em 0.5em 0 0.5em;
-  text-align: center;
-  line-height: 0.5em;
-  padding: 0 0.5em;
-  background-color: ${COLORS["green"]};
-  color: ivory;
-`;
-
-const ResetButton = styled.button`
-  height: 2em;
-  margin: 0.5em 0.5em 0 0.5em;
-  text-align: center;
-  line-height: 0.5em;
-  padding: 0 0.5em;
-`;
-
-const DeleteButton = styled.button`
-  @keyframes slideIn{
-    from {width: 0; color: transparent; font-size: 0.5em}
-    to {width: 2rem; color: white; font-size: 1.5em}
-  }
-  font-size: 1.5em;
-  font-weight: 800;
-  display: inline-block;
-  width: 2rem;
-  height: 4rem;
-  background-color: red !important;
-  color: white !important;
-  padding: 0;
-  border-radius: 0;
-  animation: slideIn ease-out 200ms;
-`;
-
-const KeyboardContainer = styled.div`
-  width: clamp(21em, 85vw, 600px);
-  /* only show virtual keyboard on mobile */
-  @media screen and (hover: hover) {
-    display: none;
-  }
-`;
+const MIN_SWIPE_DISTANCE = 60;
 
 const Board = ({ wordLength = 5, numTries = 6 }) => {
   const [gameOver, setGameOver] = useState(false);
@@ -393,19 +288,29 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     if (mediaQuery.matches) {
       setShowRowDelete(!showRowDelete);
     }
-  }
+  };
 
   return (
-    <Container shiftLeft={showRowDelete}>
+    <Container>
       <InputRows>
         {rows.map((row, rowsIndex) => {
           return (
             <RowContainer key={`row-${rowsIndex}`}>
               <Row
                 id="input-rows"
-                onTouchStart={rowsIndex === currentIndex.current - 1 ?onTouchStart : ()=>{}}
-                onTouchMove={rowsIndex === currentIndex.current - 1 ?onTouchMove : ()=>{}}
-                onClick={rowsIndex === currentIndex.current - 1 ? onRowClick : ()=>{}}
+                onTouchStart={
+                  rowsIndex === currentIndex.current - 1
+                    ? onTouchStart
+                    : () => {}
+                }
+                onTouchMove={
+                  rowsIndex === currentIndex.current - 1
+                    ? onTouchMove
+                    : () => {}
+                }
+                onClick={
+                  rowsIndex === currentIndex.current - 1 ? onRowClick : () => {}
+                }
               >
                 {row.map((char, index) => {
                   return (
