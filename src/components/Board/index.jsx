@@ -291,7 +291,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     }
   };
 
-  //conditionals to be used in showing/hiding delete button below
+  //conditionals to be used in showing/hiding buttons below
   const prevRowShouldHaveDelete = (rowsIndex) =>
     rowsIndex === currentIndex.current - 1 &&
     rowsRef.current.length &&
@@ -299,6 +299,11 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
   const currentRowShouldHaveDelete = (rowsIndex) =>
     rowsIndex === currentIndex.current &&
     possibleWordsRef.current.length <= 1;
+
+  const showEnterButton = () => rowIsComplete(rowsRef.current[currentIndex.current]) &&
+  currentIndex.current < numTries - 1 &&
+  possibleWordsRef.current.length > 1 &&
+  !gameOver;
 
   return (
     <Container shiftLeft={showRowDelete}>
@@ -354,9 +359,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
               <ResetButton onClick={chooseRandom}>RANDOM</ResetButton>
             </>
           ) : null}
-          {rowIsComplete(rowsRef.current[currentIndex.current]) &&
-          currentIndex.current < numTries - 1 &&
-          !gameOver ? (
+          {showEnterButton() ? (
             <EnterButton onClick={handleEnter} key="enter-button">
               ENTER
             </EnterButton>
