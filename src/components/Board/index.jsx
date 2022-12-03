@@ -103,17 +103,18 @@ const ResetButton = styled.button`
 const DeleteButton = styled.button`
   @keyframes slideIn{
     from {width: 0; color: transparent; font-size: 0.5em}
-    to {width: 4rem; color: white; font-size: 2.5em}
+    to {width: 2rem; color: white; font-size: 1.5em}
   }
-  font-size: 2.5em;
+  font-size: 1.5em;
+  font-weight: 800;
   display: inline-block;
-  width: 4rem;
+  width: 2rem;
   height: 4rem;
   background-color: red !important;
   color: white !important;
   padding: 0;
   border-radius: 0;
-  animation: slideIn ease-in 250ms;
+  animation: slideIn ease-out 250ms;
 `;
 
 const KeyboardContainer = styled.div`
@@ -386,6 +387,13 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     setShowRowDelete(false);
   };
 
+  const onRowClick = () => {
+    const mediaQuery = window.matchMedia("(hover: hover)");
+    if (mediaQuery.matches) {
+      setShowRowDelete(!showRowDelete);
+    }
+  }
+
   return (
     <Container>
       <InputRows>
@@ -396,6 +404,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
                 id="input-rows"
                 onTouchStart={rowsIndex === currentIndex.current - 1 ?onTouchStart : ()=>{}}
                 onTouchMove={rowsIndex === currentIndex.current - 1 ?onTouchMove : ()=>{}}
+                onClick={rowsIndex === currentIndex.current - 1 ? onRowClick : ()=>{}}
               >
                 {row.map((char, index) => {
                   return (
