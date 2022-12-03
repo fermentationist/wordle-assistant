@@ -16,6 +16,7 @@ const InputRows = styled.div`
 `;
 
 const Container = styled.main`
+  margin-left: ${props => props.shiftLeft ? "-1rem" : "0"};
   max-width: 100vw;
   max-height: 95vh;
   min-height: max(85vh, 600px);
@@ -114,7 +115,7 @@ const DeleteButton = styled.button`
   color: white !important;
   padding: 0;
   border-radius: 0;
-  animation: slideIn ease-out 250ms;
+  animation: slideIn ease-out 200ms;
 `;
 
 const KeyboardContainer = styled.div`
@@ -395,7 +396,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
   }
 
   return (
-    <Container>
+    <Container shiftLeft={showRowDelete}>
       <InputRows>
         {rows.map((row, rowsIndex) => {
           return (
