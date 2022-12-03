@@ -3,7 +3,7 @@ import { COLORS } from "../Square";
 
 
 export const Container = styled.main`
-  margin-left: ${props => props.shiftLeft ? "-1rem" : "0"};
+  margin-left: ${props => props.shiftLeft ? "-0.85rem" : "0"};
   max-width: 100vw;
   min-width: calc(100vw - 2rem);
   max-height: 95vh;
