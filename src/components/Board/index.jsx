@@ -109,15 +109,14 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
   };
 
   const handleEnter = () => {
+    setShowRowDelete(false);
     const currentRowIsComplete = rowIsComplete(
       rowsRef.current[currentIndex.current]
     );
     if (currentRowIsComplete && currentIndex.current < numTries - 1) {
       getNewFilterFromRow();
       filterWords();
-      if (possibleWordsRef.current.length < 1) {
-        setGameOver(true);
-      } else {
+      if (possibleWordsRef.current.length >= 1) {
         addNewRow();
       }
       if (possibleWordsRef.current.length === 1) {
@@ -202,6 +201,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     setRefreshNum(Math.random());
     setRows([[...emptyRow]]);
     appliedFilters.current = [];
+    setShowRowDelete(false);
   };
 
   const onVirtualKeypress = (key) => {
@@ -255,8 +255,8 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
   };
 
   const deletePreviousRow = () => {
-    // reduce currentIndex by one
-    currentIndex.current = currentIndex.current - 1;
+    // reduce currentIndex by one, unless there are no possible words (meaning the last row is the row to be deleted)
+    currentIndex.current = possibleWordsRef.current.length < 1 ? currentIndex.current : currentIndex.current - 1;
 
     // remove current row and previous row
     const rowsCopy = rowsRef.current.slice(0, currentIndex.current);
@@ -283,12 +283,22 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     setShowRowDelete(false);
   };
 
-  const onRowClick = () => { // clicking will show delete button on desktop only
+  const onRowClick = () => {
+    // clicking will show delete button on desktop only
     const mediaQuery = window.matchMedia("(hover: hover)");
     if (mediaQuery.matches) {
       setShowRowDelete(!showRowDelete);
     }
   };
+
+  //conditionals to be used in showing/hiding delete button below
+  const prevRowShouldHaveDelete = (rowsIndex) =>
+    rowsIndex === currentIndex.current - 1 &&
+    rowsRef.current.length &&
+    possibleWordsRef.current.length > 1;
+  const currentRowShouldHaveDelete = (rowsIndex) =>
+    rowsIndex === currentIndex.current &&
+    possibleWordsRef.current.length <= 1;
 
   return (
     <Container shiftLeft={showRowDelete}>
@@ -299,17 +309,22 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
               <Row
                 id="input-rows"
                 onTouchStart={
-                  rowsIndex === currentIndex.current - 1
+                  prevRowShouldHaveDelete(rowsIndex) ||
+                  currentRowShouldHaveDelete(rowsIndex)
                     ? onTouchStart
-                    : () => {}
+                    : null
                 }
                 onTouchMove={
-                  rowsIndex === currentIndex.current - 1
+                  prevRowShouldHaveDelete(rowsIndex) ||
+                  currentRowShouldHaveDelete(rowsIndex)
                     ? onTouchMove
-                    : () => {}
+                    : null
                 }
                 onClick={
-                  rowsIndex === currentIndex.current - 1 ? onRowClick : () => {}
+                  prevRowShouldHaveDelete(rowsIndex) ||
+                  currentRowShouldHaveDelete(rowsIndex)
+                    ? onRowClick
+                    : null
                 }
               >
                 {row.map((char, index) => {
@@ -325,7 +340,8 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
                     />
                   );
                 })}
-                {showRowDelete && rowsIndex === currentIndex.current - 1 ? (
+                {(currentRowShouldHaveDelete(rowsIndex) && showRowDelete) ||
+                (prevRowShouldHaveDelete(rowsIndex) && showRowDelete)? (
                   <DeleteButton onClick={deletePreviousRow}>✕</DeleteButton>
                 ) : null}
               </Row>
@@ -357,7 +373,10 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
             ? ""
             : `${possibleWords.length} POSSIBLE WORDS`}
         </Title>
-        <WordsContainer id="words-container" numRows={rowsRef.current.length}>
+        <WordsContainer
+          id="words-container"
+          numGuessRows={rowsRef.current.length}
+        >
           {possibleWords.map((word, index) => {
             return (
               <WordButton key={index} data-word={word}>
