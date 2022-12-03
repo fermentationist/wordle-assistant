@@ -283,7 +283,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     setShowRowDelete(false);
   };
 
-  const onRowClick = () => {
+  const onRowClick = () => { // clicking will show delete button on desktop only
     const mediaQuery = window.matchMedia("(hover: hover)");
     if (mediaQuery.matches) {
       setShowRowDelete(!showRowDelete);
@@ -291,7 +291,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
   };
 
   return (
-    <Container>
+    <Container shiftLeft={showRowDelete}>
       <InputRows>
         {rows.map((row, rowsIndex) => {
           return (

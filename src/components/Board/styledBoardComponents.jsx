@@ -1,17 +1,11 @@
 import styled from "styled-components";
 import { COLORS } from "../Square";
 
-export const InputRows = styled.div`
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  margin-left: ${props => props.shiftLeft ? "-1rem" : "1rem"};
-`;
 
 export const Container = styled.main`
+  margin-left: ${props => props.shiftLeft ? "-1rem" : "0"};
   max-width: 100vw;
-  min-width: 100vw;
+  min-width: calc(100vw - 2rem);
   max-height: 95vh;
   min-height: max(85vh, 600px);
   display: flex;
@@ -23,6 +17,13 @@ export const Container = styled.main`
     grid-template-columns: 1fr 2fr;
     place-items: center;
   }
+`;
+
+export const InputRows = styled.div`
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
 `;
 
 export const Row = styled.div`
