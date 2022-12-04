@@ -3,7 +3,6 @@ import { COLORS } from "../Square";
 
 
 export const Container = styled.main`
-  /* margin hack to adjust for repositioning caused by swipe to delete button reveal */
   margin-left: ${props => props.shiftLeft ? "-0.725rem" : "0"};
   max-width: 100vw;
   min-width: calc(100vw - 2rem);
@@ -13,6 +12,10 @@ export const Container = styled.main`
   flex-direction: column;
   gap: 1em;
   place-items: center;
+  @media screen and (min-width: 470px) {
+    /* only apply margin hack if width less than 470px */
+    margin: 0;
+  }
   @media screen and (min-width: 1280px) and (hover: hover) {
     display: grid;
     grid-template-columns: 1fr 2fr;
