@@ -298,7 +298,7 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
   const prevRowShouldHaveDelete = (rowsIndex) =>
     rowsRef.current.length &&
     rowsIndex === currentIndex.current - 1
-    // && possibleWordsRef.current.length > 1;
+    && possibleWordsRef.current.length !== 0;
   const currentRowShouldHaveDelete = (rowsIndex) =>
     rowsIndex === currentIndex.current &&
     possibleWordsRef.current.length <= 1;

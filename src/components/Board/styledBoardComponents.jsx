@@ -6,7 +6,7 @@ export const Container = styled.main`
   margin-left: ${props => props.shiftLeft ? "-0.725rem" : "0"};
   max-width: 100vw;
   min-width: calc(100vw - 2rem);
-  max-height: 95vh;
+  max-height: 100vh;
   min-height: max(85vh, 600px);
   display: flex;
   flex-direction: column;
