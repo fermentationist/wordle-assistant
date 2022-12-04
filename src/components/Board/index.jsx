@@ -222,39 +222,9 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     selectWord(word);
   };
 
-  const getTouchCoords = (event) => {
-    const [touch] = event.touches;
-    return { x: touch.clientX, y: touch.clientY };
-  };
-
-  const onTouchStart = (event) => {
-    const { x, y } = getTouchCoords(event);
-    setXDown(x);
-    setYDown(y);
-  };
-
-  const onTouchMove = (event) => {
-    if (!xDown || !yDown) {
-      return;
-    }
-    const { x, y } = getTouchCoords(event);
-    const xDiff = x - xDown;
-    const yDiff = y - yDown;
-    const isHorizontal = Math.abs(xDiff) > Math.abs(yDiff);
-    const isLargeEnoughSwipe = Math.abs(xDiff) > MIN_SWIPE_DISTANCE;
-    if (isHorizontal && isLargeEnoughSwipe && !gameOver) {
-      // is horizontal swipe
-      if (xDiff < 0) {
-        // left swipe
-        setShowRowDelete(true);
-      } else {
-        // right swipe
-        setShowRowDelete(false);
-      }
-    }
-  };
-
   const deletePreviousRow = () => {
+    setGameOver(false);
+    setSolved(false);
     // reduce currentIndex by one, unless there are no possible words (meaning the last row is the row to be deleted)
     currentIndex.current = possibleWordsRef.current.length < 1 ? currentIndex.current : currentIndex.current - 1;
 
@@ -283,6 +253,39 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     setShowRowDelete(false);
   };
 
+  const getTouchCoords = (event) => {
+    const [touch] = event.touches;
+    return { x: touch.clientX, y: touch.clientY };
+  };
+
+  const onTouchStart = (rowIndex, event) => {
+    console.log("currentIndex.current:", currentIndex.current);
+    const { x, y } = getTouchCoords(event);
+    setXDown(x);
+    setYDown(y);
+  };
+
+  const onTouchMove = (rowIndex, event) => {
+    if (!xDown || !yDown) {
+      return;
+    }
+    const { x, y } = getTouchCoords(event);
+    const xDiff = x - xDown;
+    const yDiff = y - yDown;
+    const isHorizontal = Math.abs(xDiff) > Math.abs(yDiff);
+    const isLargeEnoughSwipe = Math.abs(xDiff) > MIN_SWIPE_DISTANCE;
+    if (isHorizontal && isLargeEnoughSwipe) {
+      // is horizontal swipe
+      if (xDiff < 0) {
+        // left swipe
+        setShowRowDelete(true);
+      } else {
+        // right swipe
+        setShowRowDelete(false);
+      }
+    }
+  };
+
   const onRowClick = () => {
     // clicking will show delete button on desktop only
     const mediaQuery = window.matchMedia("(hover: hover)");
@@ -291,11 +294,11 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
     }
   };
 
-  //conditionals to be used in showing/hiding buttons below
+  // conditional functions to be used in showing/hiding buttons below
   const prevRowShouldHaveDelete = (rowsIndex) =>
-    rowsIndex === currentIndex.current - 1 &&
     rowsRef.current.length &&
-    possibleWordsRef.current.length > 1;
+    rowsIndex === currentIndex.current - 1
+    // && possibleWordsRef.current.length > 1;
   const currentRowShouldHaveDelete = (rowsIndex) =>
     rowsIndex === currentIndex.current &&
     possibleWordsRef.current.length <= 1;
@@ -316,19 +319,19 @@ const Board = ({ wordLength = 5, numTries = 6 }) => {
                 onTouchStart={
                   prevRowShouldHaveDelete(rowsIndex) ||
                   currentRowShouldHaveDelete(rowsIndex)
-                    ? onTouchStart
+                    ? onTouchStart.bind(null, rowsIndex)
                     : null
                 }
                 onTouchMove={
                   prevRowShouldHaveDelete(rowsIndex) ||
                   currentRowShouldHaveDelete(rowsIndex)
-                    ? onTouchMove
+                    ? onTouchMove.bind(null, rowsIndex)
                     : null
                 }
                 onClick={
                   prevRowShouldHaveDelete(rowsIndex) ||
                   currentRowShouldHaveDelete(rowsIndex)
-                    ? onRowClick
+                    ? onRowClick.bind(null, rowsIndex)
                     : null
                 }
               >
