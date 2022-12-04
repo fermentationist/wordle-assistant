@@ -32,8 +32,11 @@ function App() {
         style={{textAlign: "center"}}
       />
       <Footer>
-        <a href="https://www.nytimes.com/games/wordle/index.html">
+        <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">
           Wordle - NYTimes
+        </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="#" onClick={() => setShowModal(true)}>
+          Instructions
         </a>
         <br/>
         © 2022 <a href="https://dennis-hodges.com/">

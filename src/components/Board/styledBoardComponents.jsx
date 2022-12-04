@@ -6,7 +6,7 @@ export const Container = styled.main`
   margin-left: ${props => props.shiftLeft ? "-0.725rem" : "0"};
   max-width: 100vw;
   min-width: calc(100vw - 2rem);
-  max-height: 100vh;
+  max-height: fit-content;
   min-height: max(85vh, 600px);
   display: flex;
   flex-direction: column;
@@ -64,7 +64,7 @@ export const WordsContainer = styled.div`
   width: clamp(21em, 85vw, 600px);
   /* container height shrinks as rows are added to InputRows */
   max-height: ${(props) => `calc(50vh - calc(${props.numGuessRows} * 4em))`};
-  min-height: 7em;
+  min-height: 6em;
   flex-wrap: wrap;
   border: 1px solid gray;
   border-radius: 5px;
