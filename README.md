@@ -27,10 +27,10 @@ Because it seemed to be ordered by date, I re-sorted it alphbetically instead. M
 This project is primarily an exercise in web development, and I do not actually recommend that you make a habit of cheating at Wordle, as it is a lot less fun than trying to solve the puzzle in earnest (and it is also a bit silly to cheat at a game you play against yourself).
 
 ---
+
+#### Copyright © 2022 [Dennis Hodges](https://dennis-hodges.com) 
+
 ## License
-
-#### Copyright © 2022 [Dennis Hodges](https://github.com/fermentationist) 
-
 
 __The MIT License__
 
